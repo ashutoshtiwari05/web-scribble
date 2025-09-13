@@ -624,6 +624,9 @@ class WebScribble {
       document.body.style.cursor = 'default';
     }
     
+    // Update status indicator regardless of toolbar visibility
+    this.updateStatusIndicator();
+    
     // Notify background script
     chrome.runtime.sendMessage({
       action: 'updateIcon',
@@ -634,18 +637,34 @@ class WebScribble {
     console.log('WebScribble: Toggle complete. Active state:', this.isActive);
   }
 
+  updateStatusIndicator() {
+    const statusIndicator = this.toolbar.querySelector('#statusIndicator');
+    if (statusIndicator) {
+      if (this.isActive) {
+        statusIndicator.textContent = 'Active';
+        statusIndicator.classList.add('active');
+        console.log('WebScribble: Status indicator set to Active (green)');
+      } else {
+        statusIndicator.textContent = 'Inactive';
+        statusIndicator.classList.remove('active');
+        console.log('WebScribble: Status indicator set to Inactive (red)');
+      }
+      console.log('WebScribble: Status indicator classes:', statusIndicator.className);
+    } else {
+      console.error('WebScribble: Status indicator not found in toolbar:', this.toolbar);
+    }
+  }
+
   showToolbar() {
     this.toolbar.style.display = 'block';
     this.toolbar.querySelector('#toolbarContent').style.display = 'block';
-    this.toolbar.querySelector('#statusIndicator').textContent = 'Active';
-    this.toolbar.querySelector('#statusIndicator').classList.add('active');
+    this.updateStatusIndicator();
   }
 
   hideToolbar() {
     this.toolbar.style.display = 'none';
     this.toolbar.querySelector('#toolbarContent').style.display = 'none';
-    this.toolbar.querySelector('#statusIndicator').textContent = 'Inactive';
-    this.toolbar.querySelector('#statusIndicator').classList.remove('active');
+    this.updateStatusIndicator();
   }
 
   resizeCanvas() {
@@ -668,6 +687,9 @@ class WebScribble {
         this.toolbar.querySelector(`[data-size="${this.currentSize}"]`)?.classList.add('active');
         this.setTool(this.currentTool);
       }
+      
+      // Always update status indicator after loading settings
+      this.updateStatusIndicator();
     });
   }
 

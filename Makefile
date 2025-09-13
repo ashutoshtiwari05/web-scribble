@@ -19,23 +19,22 @@ NC = \033[0m # No Color
 
 # Default target
 help:
-	@echo "$(BLUE)PageMarker Chrome Extension - Available Commands:$(NC)"
+	@echo "$(BLUE)WebScribble Chrome Extension - Available Commands:$(NC)"
 	@echo ""
 	@echo "$(GREEN)Development:$(NC)"
 	@echo "  make dev          - Start development mode"
-	@echo "  make setup        - Setup development environment"
 	@echo "  make lint         - Run linting checks on JavaScript files"
-	@echo "  make test         - Open test page in browser"
+	@echo "  make test         - Show testing instructions"
 	@echo "  make status       - Check project status and dependencies"
 	@echo ""
 	@echo "$(GREEN)Building:$(NC)"
 	@echo "  make build        - Build the extension for production"
-	@echo "  make package      - Create a zip package for Chrome Web Store"
+	@echo "  make package      - Create a zip package for distribution"
 	@echo "  make clean        - Clean build and dist directories"
 	@echo "  make release      - Full release build (clean, lint, test, build, package)"
 	@echo ""
 	@echo "$(GREEN)Utilities:$(NC)"
-	@echo "  make icons        - Generate icon files from SVG (requires ImageMagick)"
+	@echo "  make icons        - Check icon files"
 	@echo "  make install      - Show installation instructions"
 	@echo "  make quickstart   - Quick start guide for new developers"
 	@echo ""
@@ -73,7 +72,7 @@ clean:
 build: clean
 	@echo "$(YELLOW)Building extension for production...$(NC)"
 	@mkdir -p $(BUILD_DIR)
-	@cp -r $(SRC_DIR)/*.js $(SRC_DIR)/*.html $(SRC_DIR)/*.css $(SRC_DIR)/*.json $(BUILD_DIR)/
+	@cp $(SRC_DIR)/*.js $(SRC_DIR)/*.css $(SRC_DIR)/*.json $(BUILD_DIR)/
 	@cp -r $(SRC_DIR)/icons $(BUILD_DIR)/
 	@echo "$(GREEN)Build complete! Files are in $(BUILD_DIR)/$(NC)"
 
@@ -81,9 +80,9 @@ build: clean
 package: build
 	@echo "$(YELLOW)Creating distribution package...$(NC)"
 	@mkdir -p $(DIST_DIR)
-	@cd $(BUILD_DIR) && zip -r ../$(DIST_DIR)/$(EXTENSION_NAME)-v$(VERSION).zip . -x "*.DS_Store" "*.git*" "package*.json" "node_modules/*" "*.md" "Makefile" "setup.sh" "*.sh" "test*.html" "debug.html" "generate_icons.js" "popup-simple.html"
+	@cd $(BUILD_DIR) && zip -r ../$(DIST_DIR)/$(EXTENSION_NAME)-v$(VERSION).zip . -x "*.DS_Store" "*.git*" "package*.json" "node_modules/*" "*.md" "Makefile"
 	@echo "$(GREEN)Package created: $(DIST_DIR)/$(EXTENSION_NAME)-v$(VERSION).zip$(NC)"
-	@echo "$(BLUE)Ready for Chrome Web Store upload!$(NC)"
+	@echo "$(BLUE)Ready for distribution!$(NC)"
 
 # Lint JavaScript files
 lint:
@@ -101,41 +100,11 @@ lint:
 
 # Run tests
 test:
-	@echo "$(YELLOW)Opening test page...$(NC)"
-	@if [ -f "test.html" ]; then \
-		echo "$(GREEN)Opening test.html in default browser...$(NC)"; \
-		open test.html 2>/dev/null || xdg-open test.html 2>/dev/null || echo "$(YELLOW)Please open test.html manually in your browser$(NC)"; \
-	else \
-		echo "$(RED)test.html not found$(NC)"; \
-	fi
+	@echo "$(YELLOW)No test files available. Load extension in Chrome to test.$(NC)"
 
-# Generate icons (requires ImageMagick)
+# Icons are already available in the icons/ directory
 icons:
-	@echo "$(YELLOW)Generating icon files...$(NC)"
-	@if command -v convert >/dev/null 2>&1; then \
-		echo "$(BLUE)Creating icons from SVG...$(NC)"; \
-		convert -background transparent -resize 16x16 icons/icon.svg icons/icon16.png; \
-		convert -background transparent -resize 32x32 icons/icon.svg icons/icon32.png; \
-		convert -background transparent -resize 48x48 icons/icon.svg icons/icon48.png; \
-		convert -background transparent -resize 128x128 icons/icon.svg icons/icon128.png; \
-		convert -background transparent -resize 16x16 icons/icon.svg icons/icon-active.png; \
-		echo "$(GREEN)Icons generated successfully!$(NC)"; \
-	else \
-		echo "$(RED)ImageMagick not found. Install with: brew install imagemagick$(NC)"; \
-		echo "$(YELLOW)Creating placeholder icons...$(NC)"; \
-		$(MAKE) create-placeholder-icons; \
-	fi
-
-# Create placeholder icons if ImageMagick is not available
-create-placeholder-icons:
-	@echo "$(YELLOW)Creating placeholder icons...$(NC)"
-	@mkdir -p icons
-	@echo "Creating 16x16 icon..." > icons/icon16.png
-	@echo "Creating 32x32 icon..." > icons/icon32.png
-	@echo "Creating 48x48 icon..." > icons/icon48.png
-	@echo "Creating 128x128 icon..." > icons/icon128.png
-	@echo "Creating active icon..." > icons/icon-active.png
-	@echo "$(YELLOW)Placeholder icons created. Replace with actual PNG files.$(NC)"
+	@echo "$(GREEN)Icons are already available in icons/ directory$(NC)"
 
 # Install extension in Chrome (development mode)
 install:
