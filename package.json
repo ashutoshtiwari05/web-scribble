@@ -1,0 +1,35 @@
+{
+  "name": "pagemarker-extension",
+  "version": "1.0.0",
+  "description": "A Chrome extension for real-time webpage annotation",
+  "main": "content.js",
+  "scripts": {
+    "dev": "echo 'Development mode - make changes and refresh extension in Chrome'",
+    "build": "make build",
+    "package": "make package",
+    "lint": "eslint *.js --fix",
+    "test": "echo 'No tests specified'",
+    "clean": "make clean"
+  },
+  "keywords": [
+    "chrome-extension",
+    "annotation",
+    "drawing",
+    "webpage",
+    "content-creation",
+    "education"
+  ],
+  "author": "PageMarker Team",
+  "license": "MIT",
+  "devDependencies": {
+    "eslint": "^8.50.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/your-repo/pagemarker.git"
+  },
+  "bugs": {
+    "url": "https://github.com/your-repo/pagemarker/issues"
+  },
+  "homepage": "https://github.com/your-repo/pagemarker#readme"
+}
