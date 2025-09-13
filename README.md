@@ -80,7 +80,12 @@ A powerful Chrome extension that enables real-time annotation directly on any we
 git clone https://github.com/ashutoshtiwari05/web-scribble.git
 cd web-scribble
 
+# Install dependencies
+npm install
+
 # Build the extension
+npm run build
+# or
 make build
 
 # Load in Chrome
@@ -90,22 +95,50 @@ make build
 # 4. Select the 'build' folder
 ```
 
+### Project Structure
+```
+web-scribble/
+├── src/                    # Source code
+│   ├── background.js       # Service worker
+│   ├── content.js          # Content script
+│   ├── content.css         # Styles
+│   └── manifest.json       # Extension manifest
+├── assets/                 # Static assets
+│   └── icons/              # Extension icons
+├── scripts/                # Build scripts
+│   └── build.js            # Custom build script
+├── build/                  # Build output (gitignored)
+├── dist/                   # Distribution (gitignored)
+├── package.json            # Node.js configuration
+├── Makefile               # Build automation
+└── README.md              # This file
+```
+
 ### Available Commands
 
 ```bash
-make dev          # Start development mode
-make build        # Build for production
-make package      # Create distribution package
-make clean        # Clean build artifacts
-make install      # Show installation instructions
-make help         # Show all available commands
+# Development
+npm run dev          # Start development mode
+npm run build        # Build for production
+npm run package      # Create distribution package
+npm run clean        # Clean build artifacts
+npm run lint         # Run code linting
+
+# Make commands
+make dev             # Start development mode
+make build           # Build for production
+make package         # Create distribution package
+make clean           # Clean build artifacts
+make install         # Show installation instructions
+make help            # Show all available commands
 ```
 
 ### Development Workflow
 
-1. **Make Changes** - Edit source files in the root directory
+1. **Make Changes** - Edit source files in the `src/` directory
 2. **Test Changes** - Go to `chrome://extensions/` and refresh the extension
-3. **Build for Production** - Run `make build` to update the build folder
+3. **Build for Production** - Run `npm run build` or `make build`
+4. **Package for Distribution** - Run `npm run package` or `make package`
 
 ## 🎯 Usage
 
@@ -120,6 +153,13 @@ make help         # Show all available commands
 - **Content Creators**: Screen recordings with visible annotations
 - **Educators**: Live demos and tutorial creation
 - **Trainers**: Interactive presentations and explanations
+
+### Recent Improvements
+- ✅ **Fixed Tool Switching**: Scribbled content no longer disappears when switching tools while drawing
+- ✅ **Industry Standard Structure**: Reorganized project with proper source/asset separation
+- ✅ **Enhanced Status Indicator**: Active/Inactive status now updates correctly
+- ✅ **Improved Build System**: Custom Node.js build script with better asset management
+- ✅ **Better History Management**: Drawing operations are properly saved and preserved
 
 ## 🔧 Configuration
 
@@ -149,4 +189,3 @@ This project is licensed under the MIT License.
 
 ---
 
-**Made with ❤️ for content creators and educators**

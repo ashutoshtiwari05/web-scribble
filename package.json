@@ -5,11 +5,12 @@
   "main": "content.js",
   "scripts": {
     "dev": "echo 'Development mode - make changes and refresh extension in Chrome'",
-    "build": "make build",
+    "build": "node scripts/build.js",
     "package": "make package",
-    "lint": "eslint *.js --fix",
+    "lint": "eslint src/*.js --fix",
     "test": "echo 'No tests specified'",
-    "clean": "make clean"
+    "clean": "make clean",
+    "start": "make dev"
   },
   "keywords": [
     "chrome-extension",

@@ -6,7 +6,9 @@ EXTENSION_NAME = WebScribble
 VERSION = 1.0.0
 BUILD_DIR = build
 DIST_DIR = dist
-SRC_DIR = .
+SRC_DIR = src
+ASSETS_DIR = assets
+SCRIPTS_DIR = scripts
 
 # Colors for output
 RED = \033[0;31m
@@ -15,7 +17,7 @@ YELLOW = \033[1;33m
 BLUE = \033[0;34m
 NC = \033[0m # No Color
 
-.PHONY: help clean build package install lint test dev icons
+.PHONY: help clean build package install lint test dev icons quickstart
 
 # Default target
 help:
@@ -28,7 +30,7 @@ help:
 	@echo "  make status       - Check project status and dependencies"
 	@echo ""
 	@echo "$(GREEN)Building:$(NC)"
-	@echo "  make build        - Build the extension for production"
+	@echo "  make build        - Build the extension for production (using Node.js script)"
 	@echo "  make package      - Create a zip package for distribution"
 	@echo "  make clean        - Clean build and dist directories"
 	@echo "  make release      - Full release build (clean, lint, test, build, package)"
@@ -71,9 +73,7 @@ clean:
 # Build for production
 build: clean
 	@echo "$(YELLOW)Building extension for production...$(NC)"
-	@mkdir -p $(BUILD_DIR)
-	@cp $(SRC_DIR)/*.js $(SRC_DIR)/*.css $(SRC_DIR)/*.json $(BUILD_DIR)/
-	@cp -r $(SRC_DIR)/icons $(BUILD_DIR)/
+	@node $(SCRIPTS_DIR)/build.js
 	@echo "$(GREEN)Build complete! Files are in $(BUILD_DIR)/$(NC)"
 
 # Create distribution package
@@ -205,10 +205,10 @@ release: clean lint test build package
 
 # Quick start for new developers
 quickstart:
-	@echo "$(BLUE)PageMarker Extension - Quick Start$(NC)"
+	@echo "$(BLUE)WebScribble Extension - Quick Start$(NC)"
 	@echo ""
 	@echo "$(GREEN)1. Setup development environment:$(NC)"
-	@echo "   ./setup.sh"
+	@echo "   npm install"
 	@echo "   # or"
 	@echo "   make setup"
 	@echo ""
@@ -224,3 +224,4 @@ quickstart:
 	@echo "   make release"
 	@echo ""
 	@echo "$(YELLOW)For more commands, run: make help$(NC)"
+

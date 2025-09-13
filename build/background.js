@@ -29,7 +29,7 @@ chrome.action.onClicked.addListener((tab) => {
 chrome.runtime.onMessage.addListener((request, sender) => {
   if (request.action === 'updateIcon') {
     chrome.action.setIcon({
-      path: request.active ? 'icons/icon-active.png' : 'icons/icon16.png',
+      path: request.active ? 'assets/icons/icon-active.png' : 'assets/icons/icon16.png',
       tabId: sender.tab.id
     });
   }

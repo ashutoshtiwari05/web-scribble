@@ -386,6 +386,13 @@ class WebScribble {
 
   setTool(tool) {
     console.log('WebScribble: Setting tool to:', tool);
+    
+    // If currently drawing, stop the drawing operation first
+    if (this.isDrawing) {
+      console.log('WebScribble: Stopping current drawing before tool switch');
+      this.stopDrawing();
+    }
+    
     this.currentTool = tool;
     this.toolbar.querySelectorAll('.tool-btn').forEach(btn => btn.classList.remove('active'));
     const toolButton = this.toolbar.querySelector(`[data-tool="${tool}"]`);
@@ -454,13 +461,17 @@ class WebScribble {
     console.log('WebScribble: Calculated canvas coords - x:', this.startX, 'y:', this.startY);
     
     
+    // Save current state before starting new drawing
+    this.saveState();
+    console.log('WebScribble: Saved state before starting new drawing');
+    
     this.isDrawing = true;
     
     if (this.currentTool === 'highlighter') {
       // Add initial trail point for highlighter
       this.addHighlighterTrail(this.startX, this.startY);
     } else {
-      this.saveState();
+      this.setupContext();
       this.ctx.beginPath();
       this.ctx.moveTo(this.startX, this.startY);
     }
@@ -503,6 +514,13 @@ class WebScribble {
 
   stopDrawing() {
     if (!this.isActive) return;
+    
+    // If we were drawing, save the current state to history
+    if (this.isDrawing) {
+      this.saveState();
+      console.log('WebScribble: Drawing stopped and saved to history');
+    }
+    
     this.isDrawing = false;
     this.ctx.globalCompositeOperation = 'source-over';
   }
