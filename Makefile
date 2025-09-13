@@ -2,7 +2,7 @@
 # This Makefile helps with development, building, and packaging the extension
 
 # Variables
-EXTENSION_NAME = PageMarker
+EXTENSION_NAME = WebScribble
 VERSION = 1.0.0
 BUILD_DIR = build
 DIST_DIR = dist
@@ -81,7 +81,7 @@ build: clean
 package: build
 	@echo "$(YELLOW)Creating distribution package...$(NC)"
 	@mkdir -p $(DIST_DIR)
-	@cd $(BUILD_DIR) && zip -r ../$(DIST_DIR)/$(EXTENSION_NAME)-v$(VERSION).zip . -x "*.DS_Store" "*.git*"
+	@cd $(BUILD_DIR) && zip -r ../$(DIST_DIR)/$(EXTENSION_NAME)-v$(VERSION).zip . -x "*.DS_Store" "*.git*" "package*.json" "node_modules/*" "*.md" "Makefile" "setup.sh" "*.sh" "test*.html" "debug.html" "generate_icons.js" "popup-simple.html"
 	@echo "$(GREEN)Package created: $(DIST_DIR)/$(EXTENSION_NAME)-v$(VERSION).zip$(NC)"
 	@echo "$(BLUE)Ready for Chrome Web Store upload!$(NC)"
 

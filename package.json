@@ -1,7 +1,7 @@
 {
-  "name": "pagemarker-extension",
+  "name": "webscribble-extension",
   "version": "1.0.0",
-  "description": "A Chrome extension for real-time webpage annotation",
+  "description": "Annotate directly on any webpage with drawing tools, shapes, and text. Perfect for content creators and educators.",
   "main": "content.js",
   "scripts": {
     "dev": "echo 'Development mode - make changes and refresh extension in Chrome'",
@@ -17,19 +17,14 @@
     "drawing",
     "webpage",
     "content-creation",
-    "education"
+    "education",
+    "webscribble",
+    "screen-recording",
+    "tutorial"
   ],
-  "author": "PageMarker Team",
+  "author": "Ashutosh Tiwari",
   "license": "MIT",
   "devDependencies": {
     "eslint": "^8.50.0"
-  },
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/your-repo/pagemarker.git"
-  },
-  "bugs": {
-    "url": "https://github.com/your-repo/pagemarker/issues"
-  },
-  "homepage": "https://github.com/your-repo/pagemarker#readme"
+  }
 }
